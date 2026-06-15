@@ -20,7 +20,7 @@
     border-bottom: 1px solid #ccc;
     cursor: pointer;
     &::before {
-      content: "+";
+      content: '+';
       margin: 0 8px 0 -5px;
     }
   }
@@ -36,7 +36,7 @@
       .tab {
         background-color: #ace;
         &::before {
-          content: "-";
+          content: '-';
         }
       }
     }
@@ -64,6 +64,63 @@
       padding: 15px;
       border-bottom-width: 1px;
       max-height: 300px;
+    }
+  }
+
+  .item5-1 {
+    overflow: hidden;
+    .input {
+      display: none;
+    }
+    .tab {
+      display: block;
+    }
+    .description {
+      padding: 0 15px;
+      border-bottom-width: 0;
+      max-height: 0;
+    }
+    .input:checked {
+      + .tab {
+        background-color: #ace;
+        &::before {
+          content: '-';
+        }
+      }
+      ~ .description {
+        padding: 15px;
+        border-bottom-width: 1px;
+        max-height: none;
+      }
+    }
+  }
+
+  .item5-2 {
+    summary {
+      padding: 15px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      &::marker {
+        content: '+ ';
+      }
+    }
+    .description {
+      padding: 0 15px;
+      overflow: hidden;
+    }
+    &[open] {
+      summary {
+        background-color: #ace;
+        padding: 15px;
+        border-bottom-width: 0;
+        &::marker {
+          content: '- ';
+        }
+      }
+      .description {
+        padding: 15px;
+        max-height: none;
+      }
     }
   }
 }
