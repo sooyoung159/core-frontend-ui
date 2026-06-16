@@ -1,14 +1,19 @@
-import type { ComponentType } from "react";
-import Accordions from "./components/01_accordion";
+import type { ComponentType } from 'react';
+import Accordions from './components/01_accordion';
+import TabMenus from './components/02_tabMenu';
 
 const _routeMap = {
   root: {
-    name: "root",
-    children: ["accordion"],
+    name: 'root',
+    children: ['accordion', 'tabMenus'],
   },
   accordion: {
-    name: "01. 아코디언",
+    name: '01. 아코디언',
     Component: Accordions,
+  },
+  tabMenus: {
+    name: '02. 탭메뉴',
+    Component: TabMenus,
   },
 };
 
@@ -27,7 +32,7 @@ export type Route = ParentRoute | ChildRoute;
 export const routeMap = _routeMap as Record<RoutePath, Route>;
 
 export const isParentRoute = (route: Route): route is ParentRoute => {
-  return "children" in route;
+  return 'children' in route;
 };
 export const gnbRootList: [RoutePath, Route][] = (
   routeMap.root as ParentRoute
