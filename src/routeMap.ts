@@ -1,11 +1,12 @@
 import type { ComponentType } from 'react';
 import Accordions from './components/01_accordion';
 import TabMenus from './components/02_tabMenu';
+import Tooltips from './components/03_tooltip';
 
 const _routeMap = {
   root: {
     name: 'root',
-    children: ['accordion', 'tabMenus'],
+    children: ['accordion', 'tabMenus', 'tooltip'],
   },
   accordion: {
     name: '01. 아코디언',
@@ -14,6 +15,10 @@ const _routeMap = {
   tabMenus: {
     name: '02. 탭메뉴',
     Component: TabMenus,
+  },
+  tooltip: {
+    name: '03. 툴팁',
+    Component: Tooltips,
   },
 };
 

@@ -129,4 +129,104 @@
       }
     }
   }
+
+  .tabMenu3-3 {
+    .tab > button {
+      transition: ease-out 500ms;
+    }
+    .tabPanel {
+      position: relative;
+      overflow: hidden;
+    }
+    .description {
+      position: absolute;
+      transform: translate(0, 40px);
+      opacity: 0;
+      box-sizing: border-box;
+      padding: 15px;
+      left: 0;
+      right: 0;
+      top: 0;
+      overflow: hidden;
+      height: 0;
+      padding: 0;
+      &.enter,
+      &.exit,
+      &.current {
+        height: auto;
+        padding: 15px;
+      }
+
+      &.enter {
+        position: relative;
+        animation: enter 300ms ease-out 200ms forwards;
+      }
+      &.exit {
+        animation: exit 300ms ease-in forwards;
+      }
+
+      &.current {
+        position: relative;
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+    }
+  }
+
+  .tabMenu5 {
+    position: relative;
+    padding: 0;
+    margin: 0;
+
+    .item {
+      list-style: none;
+
+      .tab {
+        position: absolute;
+        top: 0;
+        width: 25%;
+        box-sizing: border-box;
+        padding: 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+      }
+
+      &:first-child .tab {
+        left: 0;
+        border-left: none;
+      }
+      &:nth-child(2) .tab {
+        left: 25%;
+      }
+      &:nth-child(3) .tab {
+        left: 50%;
+      }
+      &:nth-child(4) .tab {
+        left: 75%;
+      }
+      .description {
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .input {
+        display: none;
+        &:checked {
+          + .tab {
+            background-color: #bde;
+          }
+          ~ .description {
+            margin-top: 50px;
+            height: auto;
+            padding: 15px;
+          }
+        }
+      }
+    }
+  }
 }
