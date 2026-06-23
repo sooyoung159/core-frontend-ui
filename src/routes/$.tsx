@@ -1,7 +1,8 @@
-import { isParentRoute, routeMap, type RoutePath } from "#/routeMap";
-import { createFileRoute } from "@tanstack/react-router";
+import ViewportContextProvider from '#/context/viewportContext';
+import { isParentRoute, routeMap, type RoutePath } from '#/routeMap';
+import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/$")({
+export const Route = createFileRoute('/$')({
   component: ItemPage,
 });
 
@@ -11,7 +12,11 @@ function ItemPage() {
   if (!route || isParentRoute(route) || !route.Component) return null;
 
   const Component = route.Component;
-  return <Component />;
+  return (
+    <ViewportContextProvider>
+      <Component />
+    </ViewportContextProvider>
+  );
 }
 
 export default ItemPage;
