@@ -37,18 +37,75 @@ const getScrollInfo = (() => {
 })();
 
 const subscribeScroll = (getSnapshop: () => void) => {
-  const callback = () => window.requestAnimationFrame(getSnapshop);
-  const resizeObserver = new ResizeObserver(callback);
-  resizeObserver.observe(document.scrollingElement!);
-  window.addEventListener('scroll', callback);
+  window.addEventListener('scroll', getSnapshop);
 
   return () => {
     window.removeEventListener('scroll', getSnapshop);
-    resizeObserver.disconnect();
   };
 };
 
 const ScrollInfoContext = createContext<ScrollInfo>(DefaultScrollInfo);
+const ScrollInfoContextProvider = ({ children }: { children: ReactNode }) => {
+  const scrollInfo = useSyncExternalStore(
+    subscribeScroll,
+    getScrollInfo,
+    () => DefaultScrollInfo,
+  );
+  return <ScrollInfoContext value={scrollInfo}>{children}</ScrollInfoContext>;
+};
+
+const getViewportElem = (() => {
+  let elem: HTMLElement | null = document.querySelector('#viewport');
+  return () => {
+    if (!elem) {
+      elem = document.createElement('div');
+      elem.id = 'viewport';
+      elem.style.cssText = 'position: fixed; inset: 0; z-index: -1;';
+      document.body.insertAdjacentElement('afterbegin', elem);
+    }
+    return elem;
+  };
+})();
+
+export type ViewportSize = Pick<DOMRect, 'width' | 'height'>;
+
+const DefaultViewportSize: ViewportSize = {
+  width: 0,
+  height: 0,
+};
+
+const getViewportSize = (() => {
+  let stored: ViewportSize = DefaultViewportSize;
+  return () => {
+    const elem = getViewportElem();
+    const { width, height } = elem.getBoundingClientRect();
+    const newViewportSize = { width, height };
+    if (!deepCompare(stored, newViewportSize)) stored = newViewportSize;
+    return stored;
+  };
+})();
+
+const subscribeResize = (getSnapshop: () => void) => {
+  const callback = () => window.requestAnimationFrame(getSnapshop);
+  const resizeObserver = new ResizeObserver(callback);
+  resizeObserver.observe(getViewportElem());
+
+  return () => {
+    resizeObserver.disconnect();
+  };
+};
+
+const ViewportSizeContext = createContext<ViewportSize>(DefaultViewportSize);
+const ViewportSizeContextProvider = ({ children }: { children: ReactNode }) => {
+  const viewportSize = useSyncExternalStore(
+    subscribeResize,
+    getViewportSize,
+    () => DefaultViewportSize,
+  );
+  return (
+    <ViewportSizeContext value={viewportSize}>{children}</ViewportSizeContext>
+  );
+};
 
 const ViewportContextProvider = ({ children }: { children: ReactNode }) => {
   const scrollInfo = useSyncExternalStore(
@@ -60,11 +117,12 @@ const ViewportContextProvider = ({ children }: { children: ReactNode }) => {
   console.log(scrollInfo);
 
   return (
-    <ScrollInfoContext.Provider value={scrollInfo}>
-      {children}
-    </ScrollInfoContext.Provider>
+    <ScrollInfoContextProvider>
+      <ViewportSizeContextProvider>{children}</ViewportSizeContextProvider>
+    </ScrollInfoContextProvider>
   );
 };
 
 export default ViewportContextProvider;
 export const useScrollInfo = () => useContext(ScrollInfoContext);
+export const useViewportSize = () => useContext(ViewportSizeContext);

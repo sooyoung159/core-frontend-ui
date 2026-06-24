@@ -3,6 +3,7 @@ import Tooltip1 from './1_r';
 import Tooltip2_1 from './2-1_r';
 import Tooltip2_2 from './2_2_r';
 import Tooltip2_3 from './2-3_r';
+import Tooltip3 from './3_r';
 
 const Tooltips = () => {
   return (
@@ -12,6 +13,7 @@ const Tooltips = () => {
       <Tooltip2_1 />
       <Tooltip2_2 />
       <Tooltip2_3 />
+      <Tooltip3 />
     </div>
   );
 };
