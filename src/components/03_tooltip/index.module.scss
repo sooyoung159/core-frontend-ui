@@ -53,4 +53,27 @@
       color: #f50;
     }
   }
+
+  .anchor-target {
+    display: none;
+    position: absolute;
+    width: 40vw;
+    max-width: calc(50vw - 9px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 2;
+  }
+
+  .anchor[open] {
+    anchor-name: --tooltip-anchor;
+  }
+
+  .anchor[open] + .anchor-target {
+    display: block;
+    position-anchor: --tooltip-anchor;
+    top: anchor(bottom);
+    left: anchor(right);
+    position-try: flip-inline, flip-block;
+  }
 }
