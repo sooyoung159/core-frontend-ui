@@ -2,11 +2,12 @@ import type { ComponentType } from 'react';
 import Accordions from './components/01_accordion';
 import TabMenus from './components/02_tabMenu';
 import Tooltips from './components/03_tooltip';
+import ReactiveTextBoxes from './components/04_reactiveTextBox';
 
 const _routeMap = {
   root: {
     name: 'root',
-    children: ['accordion', 'tabMenus', 'tooltip'],
+    children: ['accordion', 'tabMenus', 'tooltip', 'reactiveTextBox'],
   },
   accordion: {
     name: '01. 아코디언',
@@ -19,6 +20,10 @@ const _routeMap = {
   tooltip: {
     name: '03. 툴팁',
     Component: Tooltips,
+  },
+  reactiveTextBox: {
+    name: '04. 반응형 텍스트박스',
+    Component: ReactiveTextBoxes,
   },
 };
 
